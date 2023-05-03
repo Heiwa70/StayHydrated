@@ -2,7 +2,7 @@
 //  ContentView.swift
 //  StayHydrated
 //
-//  Created by Clément Seiler on 30/03/2023.
+//  Created by Paul Blanchet on 30/03/2023.
 //
 
 import SwiftUI
