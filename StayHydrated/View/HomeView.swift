@@ -9,6 +9,9 @@ import SwiftUI
 
 struct HomeView: View {
     @State var progressValue: Float = 0.1
+    var colors = ["10 Cl", "20 Cl", "30 Cl", "40 Cl", "50 Cl"]
+    @State private var selectedColor = "10 Cl"
+
 
     var body: some View {
         VStack{
@@ -16,88 +19,105 @@ struct HomeView: View {
                 .foregroundColor(Color.blue)
                 .font(.system(size: 28))
                 .padding()
-
-                VStack {
-                    ProgressBarView(progress: self.$progressValue)
-                        .frame(width: 150.0, height: 150.0)
-                        .padding(40.0)
-                    
-                }
-                Spacer()
-                
-                VStack{
-                    HStack{
-                        Button(action: {
-                            self.decrementProgress()
-                        }) {
-                            HStack {
-                                Image(systemName: "minus.rectangle.fill")
-                                Text("Decrement")
-                            }
-                            .padding(15.0)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 15.0)
-                                    .stroke(lineWidth: 2.0)
-                            )
-                        }
-                        Button(action: {
-                            self.decrementProgress()
-                        }) {
-                            HStack {
-                                Image(systemName: "minus.rectangle.fill")
-                                Text("Decrement")
-                            }
-                            .padding(15.0)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 15.0)
-                                    .stroke(lineWidth: 2.0)
-                            )
-                        }
-                    }
-                    HStack{
-                        Button(action: {
-                            self.decrementProgress()
-                        }) {
-                            HStack {
-                                Image(systemName: "minus.rectangle.fill")
-                                Text("Decrement")
-                            }
-                            .padding(15.0)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 15.0)
-                                    .stroke(lineWidth: 2.0)
-                            )
-                        }
-                        Button(action: {
-                            self.decrementProgress()
-                        }) {
-                            HStack {
-                                Image(systemName: "minus.rectangle.fill")
-                                Text("Decrement")
-                            }
-                            .padding(15.0)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 15.0)
-                                    .stroke(lineWidth: 2.0)
-                            )
-                        }
-                    }
+            
+            VStack {
+                ProgressBarView(progress: self.$progressValue)
+                    .frame(width: 150.0, height: 150.0)
+                    .padding(40.0)
                 
             }
             Spacer()
+            
+            VStack{
+                HStack{
+                    Button(action: {
+                        self.incrementProgress(quantity:0.12)
+                    }) {
+                        HStack {
+                            Image(systemName: "plus.rectangle.fill")
+                            Text("12 Cl")
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(15.0)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 15.0)
+                                .stroke(lineWidth: 2.0)
+                        )
+                    }
+                    
+                    Button(action: {
+                        self.incrementProgress(quantity:0.2)
+                    }) {
+                        HStack {
+                            Image(systemName: "plus.rectangle.fill")
+                            Text("20 Cl")
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(15.0)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 15.0)
+                                .stroke(lineWidth: 2.0)
+                        )
+                    }
+                    
+                }
+                .padding()
+                
+                HStack{
+                    Button(action: {
+                        self.incrementProgress(quantity:0.33)
+                    }) {
+                        HStack {
+                            Image(systemName: "plus.rectangle.fill")
+                            Text("33 Cl")
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(15.0)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 15.0)
+                                .stroke(lineWidth: 2.0)
+                        )
+                    }
+                    
+                    
+                    Button(action: {
+                        self.incrementProgress(quantity:0.5)
+                    }) {
+                        HStack {
+                            Image(systemName: "plus.rectangle.fill")
+                            Text("50 Cl")
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(15.0)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 15.0)
+                                .stroke(lineWidth: 2.0)
+                        )
+                    }
+                }
+                .padding([.bottom, .trailing, .leading],15)
+            }
+            Spacer()
+            
+            VStack {
+                Picker("Please choose a color", selection: $selectedColor) {
+                    ForEach(colors, id: \.self) {
+                        Text($0)
+                    }
+                }
+                Text("You selected: \(selectedColor)")
+            }
+            
+            Spacer()
         }
+        
+    
     }
     
-    
-    func incrementProgress() {
-            let randomValue = Float([0.012, 0.022, 0.034, 0.016, 0.11].randomElement()!)
-            self.progressValue += randomValue
+    func incrementProgress(quantity:Float) {
+            self.progressValue += quantity
         }
     
-    func decrementProgress() {
-            let randomValue = Float([0.012, 0.022, 0.034, 0.016, 0.11].randomElement()!)
-            self.progressValue -= randomValue
-        }
     
 }
 
