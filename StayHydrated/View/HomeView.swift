@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     @State var progressValue: Float = 0.1
-    var colors = ["10 Cl", "20 Cl", "30 Cl", "40 Cl", "50 Cl"]
+    var colors = ["10 Cl","12 Cl" ,"15 Cl", "20 Cl", "25 Cl","30 Cl","33 Cl" ,"40 Cl", "50 Cl", "75 Cl", "1 L"]
     @State private var selectedColor = "10 Cl"
 
 
@@ -100,12 +100,16 @@ struct HomeView: View {
             Spacer()
             
             VStack {
-                Picker("Please choose a color", selection: $selectedColor) {
-                    ForEach(colors, id: \.self) {
-                        Text($0)
+                HStack{
+                    Text("Autre valeur : ")
+                    Picker("Please choose a color", selection: $selectedColor) {
+                        ForEach(colors, id: \.self) {
+                            Text($0)
+                        }
                     }
+                    .frame(width: 100)
+                    .clipped()
                 }
-                Text("You selected: \(selectedColor)")
             }
             
             Spacer()
