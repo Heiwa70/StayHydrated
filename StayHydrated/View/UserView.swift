@@ -14,27 +14,32 @@ struct UserView: View {
     var activity = ["Tennis", "Badminton", "Football", "Hockey", "Golf" , "Rugby", "Course", "Vélo", "Autre"]
     @State private var selectedActivity = "Autre"
     @State private var autoObj = true
-
+    @State private var ObjValue:Int = 200
 
     var body: some View {
         VStack{
-            Image(systemName: "checkmark")
-                .resizable()
-                .frame(width: 40, height: 40)
-                .foregroundColor(.white)
-                .padding(20)
-                .background(Color.green)
+            AsyncImage(url: URL(string: "https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o="))
+            { image in
+                image.resizable()
+            } placeholder: {
+                ProgressView()
+            }
+                .frame(width: 150, height: 150)
+                .padding()
                 .clipShape(Circle())
+                .aspectRatio(contentMode: .fit)
+
+               
             
-            Spacer()
             
             Text("Paul")
+                .fontWeight(.bold)
+                .font(.system(size: 32))
             
-            Spacer()
             
             HStack{
                 Text("Age : ")
-                    .frame(width: 170,alignment: .trailing)
+                    .frame(width: 150,alignment: .trailing)
                     
                 TextField("Enter your name", value: $age, format : .number)
                     .frame(width: 100)
@@ -44,7 +49,7 @@ struct UserView: View {
             }
             HStack{
                 Text("Taille : ")
-                    .frame(width: 170,alignment: .trailing)
+                    .frame(width: 150,alignment: .trailing)
 
                 TextField("Enter your name", value: $taille, format : .number)
                     .frame(width: 100)
@@ -55,7 +60,7 @@ struct UserView: View {
             }
             HStack{
                 Text("Poids : ")
-                    .frame(width: 170,alignment: .trailing)
+                    .frame(width: 150,alignment: .trailing)
 
                 TextField("Enter your name", value: $poids, format : .number)
                     .frame(width: 100)
@@ -65,32 +70,47 @@ struct UserView: View {
                 
             }
             
+            
             HStack{
                 Text("Activité principale : ")
-                    .frame(width: 170,alignment: .trailing)
+                    .frame(width: 150,alignment: .trailing)
 
                 Picker("Please choose a color", selection: $selectedActivity) {
                     ForEach(activity, id: \.self) {
                         Text($0)
                     }
                 }
+                
                 .frame(width: 100)
                 .clipped()
             }
+            
             Spacer()
 
-            HStack{
-                Text("Objectif : ")
+            VStack{
+                HStack{
+                    Text("Objectif : ")
+                    
+                    HStack{
+                        Toggle("Auto", isOn: $autoObj)
+                        
+                    }.frame(width: 100)
+                }
+                .padding()
                 
                 HStack{
-                    Toggle("Auto", isOn: $autoObj)
-
-                }.frame(width: 100)
+                    TextField("Objectif (en Cl)", value: $ObjValue, format : .number)
+                        .frame(alignment: .trailing)
+                    Text("Cl")
+                        .frame(alignment: .leading)
+                }
+                .frame(width: 100,alignment: .center)
+                
             }
-            
-            
-            
+            Spacer()
+
         }
+        
     }
 }
 
