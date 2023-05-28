@@ -8,25 +8,61 @@
 import SwiftUI
 
 struct ContentView: View {
+    @AppStorage("localStorageID") var localStorageID: String = "42"
+    @State private var showingSheet = true
+    @StateObject var viewModel = UserViewModel()
+
     var body: some View {
-        TabView {
-            UserView()
-                .tabItem {
-                    Image(systemName: "person.fill")
-                    Text("User")
-                }
+        
+        if localStorageID.isEmpty{
             HomeView()
-                
-                .tabItem {
-                    Image(systemName: "house.fill")
-                    Text("Home")
+                .sheet(isPresented: $showingSheet) {
+                    FirstLogView(localStorageID: $localStorageID)
+            }
+        }else{
+            VStack{
+                switch viewModel.state{
+                case .success(let user) :
+                    TabView {
+                        UserView()
+                            .tabItem {
+                                Image(systemName: "person.fill")
+                                Text("User")
+                            }
+                        HomeView()
+                        
+                            .tabItem {
+                                Image(systemName: "house.fill")
+                                Text("Home")
+                            }
+                        StatsView()
+                            .tabItem {
+                                Image(systemName: "chart.bar.xaxis")
+                                Text("Stats")
+                            }
+                        
+                    }
+                case .loading:
+                    ProgressView()
+                    
+                default:
+                    Text("error")
+                    Button("Save") {
+                        Task {
+                             removelocalstorage()
+                        }
+                    }
                 }
-            StatsView()
-                .tabItem {
-                    Image(systemName: "chart.bar.xaxis")
-                    Text("Stats")
-                }
+            }.task {
+                await viewModel.getUser()
+            }
         }
+        
+    }
+    private func removelocalstorage()  {
+        print(localStorageID)
+        UserDefaults.standard.removeObject(forKey: "localStorageID")
+
     }
 }
 

@@ -145,7 +145,7 @@ struct UserView: View {
     private func saveChanges() async {
         hasChanges = true
         
-        let result: () = await viewModel.addUser(from: user)
+        let result = await viewModel.addUser(from: user)
         print(result)
         
     }

@@ -6,10 +6,12 @@
 //
 
 import Foundation
+import SwiftUI
 
 @MainActor
 class UserViewModel: ObservableObject {
-    
+    @AppStorage("localStorageID") var localStorageID: String = ""
+
     enum State {
         case notAvailable
         case loading
@@ -22,10 +24,23 @@ class UserViewModel: ObservableObject {
     
     private let service: ApiService = ApiService()
     
-    func addUser(from user: User) async {
+    func addUser(from user: User) async -> String {
+        var id : String = "-1"
         self.state = .loading
         do {
-            let adduser = try await service.addUser(for : user)
+            id = try await service.addUser(for : user)
+        } catch {
+            self.state = .failed(error: error)
+            print(error)
+        }
+        return id
+    }
+    
+    func getUser() async{
+        self.state = .loading
+        do {
+            let user = try await service.getUser()
+            self.state = .success(data: user)
         } catch {
             self.state = .failed(error: error)
             print(error)
