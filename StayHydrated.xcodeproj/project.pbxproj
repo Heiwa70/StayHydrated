@@ -18,6 +18,7 @@
 		CF1B86312A028C7300510467 /* ProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1B86302A028C7300510467 /* ProgressBarView.swift */; };
 		CF1F40D62A15123A00C3E2BD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1F40D52A15123A00C3E2BD /* User.swift */; };
 		CF1F40D82A1513D300C3E2BD /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1F40D72A1513D300C3E2BD /* ApiService.swift */; };
+		CF711CB92A2380A6009DC9AC /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF711CB82A2380A6009DC9AC /* UserViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		CF1B86302A028C7300510467 /* ProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarView.swift; sourceTree = "<group>"; };
 		CF1F40D52A15123A00C3E2BD /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		CF1F40D72A1513D300C3E2BD /* ApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
+		CF711CB82A2380A6009DC9AC /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 		414FCAD529D5776800F31776 /* StayHydrated */ = {
 			isa = PBXGroup;
 			children = (
+				CF711CB72A23808B009DC9AC /* ViewModel */,
 				CF1F40D42A15122A00C3E2BD /* Model */,
 				CF0546492A028883008A867B /* View */,
 				414FCAD629D5776800F31776 /* StayHydratedApp.swift */,
@@ -102,6 +105,14 @@
 				CF1F40D72A1513D300C3E2BD /* ApiService.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		CF711CB72A23808B009DC9AC /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				CF711CB82A2380A6009DC9AC /* UserViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -176,6 +187,7 @@
 			files = (
 				414FCAD929D5776800F31776 /* ContentView.swift in Sources */,
 				CF0546512A02898A008A867B /* HomeView.swift in Sources */,
+				CF711CB92A2380A6009DC9AC /* UserViewModel.swift in Sources */,
 				CF0546552A0289C6008A867B /* StatsView.swift in Sources */,
 				CF0546532A0289AA008A867B /* FirstLogView.swift in Sources */,
 				CF1F40D62A15123A00C3E2BD /* User.swift in Sources */,

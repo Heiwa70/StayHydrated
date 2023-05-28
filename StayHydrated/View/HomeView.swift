@@ -16,7 +16,7 @@ struct HomeView: View {
     var body: some View {
         VStack{
             Text("Stay Hidrated 💦")
-                .foregroundColor(Color.blue)
+                .foregroundColor(Color.white)
                 .font(.system(size: 28))
                 .padding()
             
@@ -114,6 +114,13 @@ struct HomeView: View {
             
             Spacer()
         }
+        .background(
+            LinearGradient(
+                gradient: Gradient(colors: [Color(hex: "#4ca1af"), Color(hex: "#c4e0e5")]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        )
         
     
     }

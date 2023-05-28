@@ -15,23 +15,24 @@ struct ApiService {
         case invalideUserName
     }
     
-    func fetchFollowers(for username: String, page: Int) async throws -> [User] {
-        let baseURL = "https://api.github.com/users/"
-        let endPoint = baseURL + "\(username)/followers?per_page=100&page=\(page)"
-        
+    func addUser(for user: User) async throws -> User{
+        let baseURL = "http://localhost:8888/api.php?func=adduser&"
+        let endPoint = baseURL +  "&nom=\(user.nom)&taille=\(user.taille)&poids=\(user.poids)&activite=\(user.activite)&objectif=\(user.objectif)&age=\(user.age)"
+
+
         guard let url = URL(string: endPoint) else {
             throw ApiError.invalideUserName
         }
-        
+
         let (data,response) = try await URLSession.shared.data(from: url)
-        
+
         guard let response = response as? HTTPURLResponse, response.statusCode == 200 else
         {
             throw ApiError.invalideStatusCode
         }
-        
-        let decodedData = try JSONDecoder().decode([User].self, from: data)
-        
+
+        let decodedData = try JSONDecoder().decode(User.self, from: data)
+
         return decodedData
     }
     

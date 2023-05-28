@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct UserView: View {
-    @State private var age: Int = 24
-    @State private var taille:Int=180
-    @State private var poids:Int = 75
+    @State private var hasChanges = false
+    @StateObject var viewModel = UserViewModel()
+
+    @State private var user = User(id_user: 0, nom: "Paul", taille: 180, poids: 75, activite: "Autre", objectif: 200, age: 24, obj_auto: true)
+
     var activity = ["Tennis", "Badminton", "Football", "Hockey", "Golf" , "Rugby", "Course", "Vélo", "Autre"]
-    @State private var selectedActivity = "Autre"
-    @State private var autoObj = true
-    @State private var ObjValue:Int = 200
+   
 
     var body: some View {
         VStack{
@@ -24,7 +24,7 @@ struct UserView: View {
             } placeholder: {
                 ProgressView()
             }
-                .frame(width: 150, height: 150)
+                .frame(width: 100, height: 100)
                 .padding()
                 .clipShape(Circle())
                 .aspectRatio(contentMode: .fit)
@@ -40,33 +40,41 @@ struct UserView: View {
             HStack{
                 Text("Age : ")
                     .frame(width: 150,alignment: .trailing)
-                    
-                TextField("Enter your name", value: $age, format : .number)
+                
+                TextField("Enter your name", value: $user.age, format : .number)
                     .frame(width: 100)
-
                     .textFieldStyle(.roundedBorder)
-                                    .padding()
+                    .padding()
+                    .onChange(of: user.nom) { _ in
+                        hasChanges = true
+                    }
             }
             HStack{
                 Text("Taille : ")
                     .frame(width: 150,alignment: .trailing)
 
-                TextField("Enter your name", value: $taille, format : .number)
+                TextField("Enter your name", value: $user.taille, format : .number)
                     .frame(width: 100)
 
                     .textFieldStyle(.roundedBorder)
-                                    .padding()
+                    .padding()
+                    .onChange(of: user.taille) { _ in
+                        hasChanges = true
+                    }
                 
             }
             HStack{
                 Text("Poids : ")
                     .frame(width: 150,alignment: .trailing)
 
-                TextField("Enter your name", value: $poids, format : .number)
+                TextField("Enter your name", value: $user.poids, format : .number)
                     .frame(width: 100)
 
                     .textFieldStyle(.roundedBorder)
-                                    .padding()
+                    .padding()
+                    .onChange(of: user.poids) { _ in
+                        hasChanges = true
+                    }
                 
             }
             
@@ -75,12 +83,14 @@ struct UserView: View {
                 Text("Activité principale : ")
                     .frame(width: 150,alignment: .trailing)
 
-                Picker("Please choose a color", selection: $selectedActivity) {
+                Picker("Please choose a color", selection: $user.activite) {
                     ForEach(activity, id: \.self) {
                         Text($0)
                     }
                 }
-                
+                .onChange(of: user.activite) { _ in
+                    hasChanges = true
+                }
                 .frame(width: 100)
                 .clipped()
             }
@@ -92,27 +102,55 @@ struct UserView: View {
                     Text("Objectif : ")
                     
                     HStack{
-                        Toggle("Auto", isOn: $autoObj)
+                        Toggle("Auto", isOn: $user.obj_auto)
+                            .onChange(of: user.obj_auto) { _ in
+                                hasChanges = true
+                            }
                         
                     }.frame(width: 100)
                 }
                 .padding()
                 
                 HStack{
-                    TextField("Objectif (en Cl)", value: $ObjValue, format : .number)
+                    TextField("Objectif (en Cl)", value: $user.objectif, format : .number)
                         .frame(alignment: .trailing)
+                        .onChange(of: user.objectif) { _ in
+                            hasChanges = true
+                        }
                     Text("Cl")
                         .frame(alignment: .leading)
+                    Button("Save") {
+                        Task {
+                            await saveChanges()
+                        }
+                    }
+//                    .disabled(!hasChanges)
+                    .padding()
+                    .foregroundColor(.white)
+                    .background(Color.blue)
+                    .cornerRadius(8)
+                    .frame(width:300,height: 20)
                 }
                 .frame(width: 100,alignment: .center)
                 
             }
             Spacer()
 
+        
+            
+            
         }
         
     }
+    private func saveChanges() async {
+        hasChanges = true
+        
+        let result: () = await viewModel.addUser(from: user)
+        print(result)
+        
+    }
 }
+
 
 struct UserView_Previews: PreviewProvider {
     static var previews: some View {
