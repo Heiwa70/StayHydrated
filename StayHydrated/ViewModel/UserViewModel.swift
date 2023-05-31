@@ -16,6 +16,7 @@ class UserViewModel: ObservableObject {
         case notAvailable
         case loading
         case success(data: User)
+        case successUpdate
 //        case success_info(data: FollowerInfo)
         case failed(error: Error)
     }
@@ -53,6 +54,8 @@ class UserViewModel: ObservableObject {
             self.state = .failed(error: error)
             print(error)
         }
+        
+        
 //        let baseURL = "http://localhost:8888/api.php"
 //        let endpoint = baseURL + "?func=getuser&id=" + localStorageID
 //        print(endpoint)
@@ -76,7 +79,18 @@ class UserViewModel: ObservableObject {
 //            throw ApiError.failedToDecode
 //        }
     }
-    
+    func updateUser(user:User) async {
+        self.state = .loading
+        do {
+               let updatedUser = try await service.updateUser(for: user)
+               self.state = .successUpdate
+           } catch {
+               self.state = .failed(error: error)
+               print(error)
+           }
+       
+        
+    }
     
     
 //    func getFollowers(from userName: String, page: Int) async {

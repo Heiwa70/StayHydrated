@@ -31,7 +31,7 @@ struct ContentView: View {
                                 Image(systemName: "house.fill")
                                 Text("Home")
                             }
-                        UserView()
+                        UserView(user: user)
                             .tabItem {
                                 Image(systemName: "person.fill")
                                 Text("User")

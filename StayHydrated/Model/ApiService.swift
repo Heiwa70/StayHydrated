@@ -63,6 +63,28 @@ struct ApiService {
     
         }
     
+    func updateUser(for user: User) async throws -> String {
+        let baseURL = "http://localhost:8888/api.php?func=updateuser"
+
+        let endPoint  = "\(baseURL)&id=\(user.id_user)&nom=\(user.nom)&taille=\(user.taille.description)&poids=\(user.poids.description)&activite=\(user.activite)&objectif=\(user.objectif)"
+
+        print(endPoint)
+        guard let url = URL(string: endPoint) else {
+            throw ApiError.invalideUserName
+        }
+
+        let (data,response) = try await URLSession.shared.data(from: url)
+
+        guard let response = response as? HTTPURLResponse, response.statusCode == 200 else
+        {
+            throw ApiError.invalideStatusCode
+        }
+
+        let decodedData = try JSONDecoder().decode(String.self, from: data)
+
+        return decodedData
+    }
+    
 //    func fetchInfo(for username:String) async throws -> FollowerInfo {
 //        let baseURL = "https://api.github.com/users/"
 //        let endPoint = baseURL + "\(username)"

@@ -8,22 +8,16 @@ import SwiftUI
 
 struct UserView: View {
     @State private var hasChanges = false
+    
     @StateObject var viewModel = UserViewModel()
 
-    @State private var user = User(id_user: 0, nom: "Paul", taille: 180, poids: 75, activite: "Autre", objectif: 200, age: 24, obj_auto: 0)
+    @State var user: User
 
-    var activity = ["Tennis", "Badminton", "Football", "Hockey", "Golf" , "Rugby", "Course", "Vélo", "Autre"]
+    var activity = ["Tennis", "Badminton", "Football", "Hockey", "Golf" , "Rugby", "Course", "Velo", "Autre"]
 
-    var isObjAutoOn: Binding<Bool> {
-        Binding<Bool>(
-            get: {
-                return user.obj_auto != 0
-            },
-            set: { newValue in
-                user.obj_auto = newValue ? 1 : 0
-            }
-        )
-    }
+//    var isObjAutoOn: Bool = false
+    @State private var isObjAutoOn = false
+
 
     var body: some View {
         VStack {
@@ -37,7 +31,7 @@ struct UserView: View {
             .clipShape(Circle())
             .aspectRatio(contentMode: .fit)
 
-            Text("Paul")
+            Text(user.nom)
                 .fontWeight(.bold)
                 .font(.system(size: 32))
 
@@ -103,7 +97,7 @@ struct UserView: View {
                     Text("Objectif: ")
 
                     HStack {
-                        Toggle("Auto", isOn: isObjAutoOn)
+                        Toggle("Auto", isOn: $isObjAutoOn)
                             .onChange(of: user.obj_auto) { _ in
                                 hasChanges = true
                             }
@@ -141,13 +135,18 @@ struct UserView: View {
     private func saveChanges() async {
         hasChanges = true
         
-        let result = await viewModel.addUser(from: user)
+        let result = await viewModel.updateUser(user: user)
         print(result)
     }
 }
 
-struct UserView_Previews: PreviewProvider {
-    static var previews: some View {
-        UserView()
-    }
-}
+//struct UserView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        UserView(user)
+//    }
+//}
+//struct UserView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        UserView(user: .constant(User()))
+//    }
+//}
