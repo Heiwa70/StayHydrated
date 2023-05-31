@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
-    @AppStorage("localStorageID") var localStorageID: String = "42"
+    @AppStorage("localStorageID") var localStorageID: String = ""
     @State private var showingSheet = true
     @StateObject var viewModel = UserViewModel()
 
     var body: some View {
+        
         
         if localStorageID.isEmpty{
             HomeView()
@@ -24,17 +25,18 @@ struct ContentView: View {
                 switch viewModel.state{
                 case .success(let user) :
                     TabView {
-                        UserView()
-                            .tabItem {
-                                Image(systemName: "person.fill")
-                                Text("User")
-                            }
                         HomeView()
                         
                             .tabItem {
                                 Image(systemName: "house.fill")
                                 Text("Home")
                             }
+                        UserView()
+                            .tabItem {
+                                Image(systemName: "person.fill")
+                                Text("User")
+                            }
+                        
                         StatsView()
                             .tabItem {
                                 Image(systemName: "chart.bar.xaxis")
@@ -46,6 +48,7 @@ struct ContentView: View {
                     ProgressView()
                     
                 default:
+                    Text(localStorageID)
                     Text("error")
                     Button("Save") {
                         Task {
