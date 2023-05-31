@@ -19,6 +19,12 @@ class UserViewModel: ObservableObject {
 //        case success_info(data: FollowerInfo)
         case failed(error: Error)
     }
+    enum ApiError: Error {
+            case failed
+            case failedToDecode
+            case invalideStatusCode
+            case invalideUserName
+        }
     
     @Published var state: State = .notAvailable
     
@@ -36,15 +42,39 @@ class UserViewModel: ObservableObject {
         return id
     }
     
-    func getUser() async{
+    func getUser() async {
+        
         self.state = .loading
         do {
             let user = try await service.getUser()
             self.state = .success(data: user)
-        } catch {
+        }
+        catch {
             self.state = .failed(error: error)
             print(error)
         }
+//        let baseURL = "http://localhost:8888/api.php"
+//        let endpoint = baseURL + "?func=getuser&id=" + localStorageID
+//        print(endpoint)
+//        guard let url = URL(string: endpoint) else {
+//            throw ApiError.invalideUserName
+//        }
+//
+//        let (data, response) = try await URLSession.shared.data(from: url)
+//
+//        guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+//            throw ApiError.invalideStatusCode
+//        }
+//
+//        do {
+//            let decodedData = try JSONDecoder().decode(User.self, from: data)
+//            self.State = .success(data: decodedData)
+//            return decodedData
+//        } catch {
+//            // Affichez les informations de débogage pour comprendre la cause de l'erreur
+//            print("Erreur de décodage JSON: \(error)")
+//            throw ApiError.failedToDecode
+//        }
     }
     
     

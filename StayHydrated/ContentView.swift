@@ -57,7 +57,12 @@ struct ContentView: View {
                     }
                 }
             }.task {
-                await viewModel.getUser()
+                do {
+                    try await viewModel.getUser()
+                } catch {
+                    // Gérer l'erreur ici
+                    print("Erreur lors de la récupération de l'utilisateur : \(error)")
+                }
             }
         }
         

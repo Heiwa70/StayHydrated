@@ -43,7 +43,7 @@ struct ApiService {
     
     func getUser() async throws -> User {
         @AppStorage("localStorageID") var localStorageID: String = ""
-        let baseURL = "http://localhost:8888/api.php?func=id&"
+        let baseURL = "http://localhost:8888/api.php?func=getuser&"
         let endPoint = baseURL +  "&id=" + localStorageID
 
             guard let url = URL(string: endPoint) else {

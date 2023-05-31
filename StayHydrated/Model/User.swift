@@ -15,5 +15,5 @@ struct User: Codable, Hashable{
     var activite : String
     var objectif : Float
     var age: Int
-    var obj_auto: Bool
+    var obj_auto: Int
 }
