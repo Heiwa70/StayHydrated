@@ -11,6 +11,7 @@ struct UserView: View {
     
     @StateObject var viewModel = UserViewModel()
 
+    @State var showingAlert = false
     @State var user: User
 
     var activity = ["Tennis", "Badminton", "Football", "Hockey", "Golf" , "Rugby", "Course", "Velo", "Autre"]
@@ -102,6 +103,13 @@ struct UserView: View {
                                 hasChanges = true
                             }
                     }
+                    TextField("Objectif", value: $user.objectif, format: .number)
+                        .frame(width: 100)
+                        .textFieldStyle(.roundedBorder)
+                        .padding()
+                        .onChange(of: user.poids) { _ in
+                            hasChanges = true
+                        }
                     .frame(width: 100)
                 }
                 .padding()
@@ -118,6 +126,9 @@ struct UserView: View {
                         Task {
                             await saveChanges()
                         }
+                    }
+                    .alert("Infos mises à jours", isPresented : $showingAlert){
+                        Button("OK", role: .cancel) {}
                     }
                     .padding()
                     .foregroundColor(.white)
@@ -137,6 +148,8 @@ struct UserView: View {
         
         let result = await viewModel.updateUser(user: user)
         print(result)
+        showingAlert = true
+        
     }
 }
 
