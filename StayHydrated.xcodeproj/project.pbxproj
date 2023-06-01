@@ -11,6 +11,9 @@
 		414FCAD929D5776800F31776 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414FCAD829D5776800F31776 /* ContentView.swift */; };
 		414FCADB29D5776900F31776 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 414FCADA29D5776900F31776 /* Assets.xcassets */; };
 		414FCADE29D5776900F31776 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 414FCADD29D5776900F31776 /* Preview Assets.xcassets */; };
+		CF02C08B2A27CA2F00347DB7 /* StatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF02C08A2A27CA2F00347DB7 /* StatViewModel.swift */; };
+		CF02C08D2A27CA3D00347DB7 /* Stat.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF02C08C2A27CA3D00347DB7 /* Stat.swift */; };
+		CF02C08F2A2885BD00347DB7 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF02C08E2A2885BD00347DB7 /* ChartView.swift */; };
 		CF05464F2A028980008A867B /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF05464E2A028980008A867B /* UserView.swift */; };
 		CF0546512A02898A008A867B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0546502A02898A008A867B /* HomeView.swift */; };
 		CF0546532A0289AA008A867B /* FirstLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0546522A0289AA008A867B /* FirstLogView.swift */; };
@@ -27,6 +30,9 @@
 		414FCAD829D5776800F31776 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		414FCADA29D5776900F31776 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		414FCADD29D5776900F31776 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		CF02C08A2A27CA2F00347DB7 /* StatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatViewModel.swift; sourceTree = "<group>"; };
+		CF02C08C2A27CA3D00347DB7 /* Stat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stat.swift; sourceTree = "<group>"; };
+		CF02C08E2A2885BD00347DB7 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		CF05464E2A028980008A867B /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		CF0546502A02898A008A867B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		CF0546522A0289AA008A867B /* FirstLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstLogView.swift; sourceTree = "<group>"; };
@@ -94,6 +100,7 @@
 				CF0546522A0289AA008A867B /* FirstLogView.swift */,
 				CF0546542A0289C6008A867B /* StatsView.swift */,
 				CF1B86302A028C7300510467 /* ProgressBarView.swift */,
+				CF02C08E2A2885BD00347DB7 /* ChartView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -103,6 +110,7 @@
 			children = (
 				CF1F40D52A15123A00C3E2BD /* User.swift */,
 				CF1F40D72A1513D300C3E2BD /* ApiService.swift */,
+				CF02C08C2A27CA3D00347DB7 /* Stat.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -111,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				CF711CB82A2380A6009DC9AC /* UserViewModel.swift */,
+				CF02C08A2A27CA2F00347DB7 /* StatViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -186,6 +195,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				414FCAD929D5776800F31776 /* ContentView.swift in Sources */,
+				CF02C08F2A2885BD00347DB7 /* ChartView.swift in Sources */,
 				CF0546512A02898A008A867B /* HomeView.swift in Sources */,
 				CF711CB92A2380A6009DC9AC /* UserViewModel.swift in Sources */,
 				CF0546552A0289C6008A867B /* StatsView.swift in Sources */,
@@ -194,7 +204,9 @@
 				CF1F40D82A1513D300C3E2BD /* ApiService.swift in Sources */,
 				CF05464F2A028980008A867B /* UserView.swift in Sources */,
 				414FCAD729D5776800F31776 /* StayHydratedApp.swift in Sources */,
+				CF02C08D2A27CA3D00347DB7 /* Stat.swift in Sources */,
 				CF1B86312A028C7300510467 /* ProgressBarView.swift in Sources */,
+				CF02C08B2A27CA2F00347DB7 /* StatViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

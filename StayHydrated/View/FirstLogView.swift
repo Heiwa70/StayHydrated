@@ -9,9 +9,10 @@ import SwiftUI
 struct FirstLogView: View {
     @Binding var localStorageID: String
     @StateObject var viewModel = UserViewModel()
+    @StateObject var statViewModel = StatViewModel()
     @Environment(\.dismiss) var dismiss
-    @State private var user = User(id_user: 0, nom: "Paul", taille: 180, poids: 75, activite: "Autre", objectif: 200, age: 24, obj_auto: 0)
-    var activity = ["Tennis", "Badminton", "Football", "Hockey", "Golf" , "Rugby", "Course", "Vélo", "Autre"]
+    @State private var user = User(id_user: 0, nom: "", taille: 0, poids: 0, activite: "", objectif: 0, age: 0, obj_auto: 0)
+    var activity = ["Autre" ,"Tennis", "Badminton", "Football", "Hockey", "Golf" , "Rugby", "Course", "Vélo" ]
 
     var isObjAutoOn: Binding<Bool> {
         Binding<Bool>(
@@ -26,58 +27,56 @@ struct FirstLogView: View {
 
     var body: some View {
         VStack {
-            Spacer()
             Text("Bienvenue sur Stay Hydrated!")
                 .fontWeight(.bold)
                 .font(.system(size: 20))
                 .padding()
             Text("Remplissez ces informations pour commencer !")
-            Spacer()
-
+            
             HStack {
                 Text("Nom: ")
                     .frame(width: 150, alignment: .trailing)
-
+                
                 TextField("Enter your name", text: $user.nom)
                     .frame(width: 100)
                     .textFieldStyle(.roundedBorder)
                     .padding()
             }
-
+            
             HStack {
                 Text("Age: ")
                     .frame(width: 150, alignment: .trailing)
-
+                
                 TextField("Enter your age", value: $user.age, format: .number)
                     .frame(width: 100)
                     .textFieldStyle(.roundedBorder)
                     .padding()
             }
-
+            
             HStack {
                 Text("Taille: ")
                     .frame(width: 150, alignment: .trailing)
-
+                
                 TextField("Enter your height", value: $user.taille, format: .number)
                     .frame(width: 100)
                     .textFieldStyle(.roundedBorder)
                     .padding()
             }
-
+            
             HStack {
                 Text("Poids: ")
                     .frame(width: 150, alignment: .trailing)
-
+                
                 TextField("Enter your weight", value: $user.poids, format: .number)
                     .frame(width: 100)
                     .textFieldStyle(.roundedBorder)
                     .padding()
             }
-
+            
             HStack {
                 Text("Activité principale: ")
                     .frame(width: 150, alignment: .trailing)
-
+                
                 Picker("Please choose an activity", selection: $user.activite) {
                     ForEach(activity, id: \.self) {
                         Text($0)
@@ -86,44 +85,30 @@ struct FirstLogView: View {
                 .frame(width: 100)
                 .clipped()
             }
-
-            VStack {
-                HStack {
-                    Text("Objectif: ")
-
-                    HStack {
-                        Toggle("Auto", isOn: isObjAutoOn)
-                    }
+            
+            HStack {
+                Text("Objectif (en Cl) : ")
+                    .frame(width: 150, alignment: .trailing)
+                
+                TextField("Enter your objectif", value: $user.objectif, format: .number)
                     .frame(width: 100)
-                }
-                .padding()
-
-                HStack {
-                    TextField("Objectif (en Cl)", value: $user.objectif, format: .number)
-                        .frame(alignment: .trailing)
-
-                    Text("Cl")
-                        .frame(alignment: .leading)
-
-                    Button("Sauvegarder") {
-                        Task {
-                            await saveChanges()
-                        }
-                    }
+                    .textFieldStyle(.roundedBorder)
                     .padding()
-                    .foregroundColor(.white)
-                    .background(Color.blue)
-                    .cornerRadius(8)
-                    .frame(width: 300, height: 20)
+            }
+            Button("Go !") {
+                Task {
+                    await saveChanges()
                 }
-                .frame(width: 100, alignment: .center)
             }
         }
     }
 
     private func saveChanges() async {
         let result = await viewModel.addUser(from: user)
+        var stat : Stat = Stat(id_user: (result as NSString).integerValue, quantite: 0, jour1: 0, jour2: 0, jour3: 0, jour4: 0, jour5: 0, jour6: 0, jour7: 0)
+        await statViewModel.addStat(from: stat)
         print(result)
         localStorageID = result
+        
     }
 }

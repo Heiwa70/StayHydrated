@@ -6,44 +6,49 @@
 //
 
 import SwiftUI
+import UserNotifications
 
 struct ContentView: View {
+    
     @AppStorage("localStorageID") var localStorageID: String = ""
     @State private var showingSheet = true
     @StateObject var viewModel = UserViewModel()
-
+    @StateObject var statViewModel = StatViewModel()
+    
     var body: some View {
         
         
         if localStorageID.isEmpty{
-            HomeView()
+            ProgressView()
                 .sheet(isPresented: $showingSheet) {
                     FirstLogView(localStorageID: $localStorageID)
-            }
+                }
         }else{
             VStack{
                 switch viewModel.state{
                 case .success(let user) :
                     TabView {
-                        HomeView()
                         
-                            .tabItem {
-                                Image(systemName: "house.fill")
-                                Text("Home")
-                            }
-                        UserView(user: user)
+                        UserView(user: user , viewModel : viewModel)
                             .tabItem {
                                 Image(systemName: "person.fill")
                                 Text("User")
                             }
                         
-                        StatsView()
+                        HomeView(objectif: user.objectif/100)
+                            .tabItem {
+                                Image(systemName: "house.fill")
+                                Text("Home")
+                            }
+                        
+                        
+                        StatsView(objectif: user.objectif)
                             .tabItem {
                                 Image(systemName: "chart.bar.xaxis")
                                 Text("Stats")
                             }
-                        
                     }
+                    
                 case .loading:
                     ProgressView()
                     
@@ -52,7 +57,7 @@ struct ContentView: View {
                     Text("error")
                     Button("Save") {
                         Task {
-                             removelocalstorage()
+                            removelocalstorage()
                         }
                     }
                 }
@@ -70,8 +75,8 @@ struct ContentView: View {
     private func removelocalstorage()  {
         print(localStorageID)
         UserDefaults.standard.removeObject(forKey: "localStorageID")
-
     }
+    
 }
 
 extension Color {
